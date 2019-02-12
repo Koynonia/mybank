@@ -20,27 +20,26 @@ namespace ex_bank
         public string Nome { get => nome; set => nome = value; }
         public string Sobrenome { get => sobrenome; set => sobrenome = value; }
 
-        public void Deposito(double valor, Conta destino)
+        public void Deposito(double valor, Conta titular)
         {
-            destino.Saldo +=valor;
+            titular.Saldo +=valor;
         }
 
-        public bool Saque(double valor)
+        public bool Saque(double valor, Conta titular)
         {
-            if(this.Saldo >= valor)
+            if(titular.Saldo >= valor)
             {
-                this.Saldo -= valor;
+                titular.Saldo -= valor;
                 return true;
             }
-
             return false;
         }
 
-        public bool Transfere(double valor, Conta destino)
+        public bool Transfere(double valor, Conta titular, Conta favorecido)
         {
-            if(this.Saque(valor))
+            if(titular.Saque(valor, titular))
             {
-                this.Deposito(valor, destino);
+                titular.Deposito(valor, favorecido);
                 return true;
             }
 

@@ -39,6 +39,8 @@
             this.cboBoxTitular = new System.Windows.Forms.ComboBox();
             this.lblTitular = new System.Windows.Forms.Label();
             this.grpBoxInfo = new System.Windows.Forms.GroupBox();
+            this.lblInfoTitular = new System.Windows.Forms.Label();
+            this.txtBoxInfoTitular = new System.Windows.Forms.TextBox();
             this.lblSaldo = new System.Windows.Forms.Label();
             this.txtBoxSaldo = new System.Windows.Forms.TextBox();
             this.grpBoxFunc.SuspendLayout();
@@ -47,6 +49,7 @@
             // 
             // btnDeposito
             // 
+            this.btnDeposito.Enabled = false;
             this.btnDeposito.Location = new System.Drawing.Point(14, 153);
             this.btnDeposito.Name = "btnDeposito";
             this.btnDeposito.Size = new System.Drawing.Size(84, 23);
@@ -59,7 +62,7 @@
             // 
             this.lblValor.AutoSize = true;
             this.lblValor.ForeColor = System.Drawing.Color.Navy;
-            this.lblValor.Location = new System.Drawing.Point(14, 28);
+            this.lblValor.Location = new System.Drawing.Point(29, 108);
             this.lblValor.Name = "lblValor";
             this.lblValor.Size = new System.Drawing.Size(57, 13);
             this.lblValor.TabIndex = 2;
@@ -67,7 +70,7 @@
             // 
             // txtValor
             // 
-            this.txtValor.Location = new System.Drawing.Point(91, 25);
+            this.txtValor.Location = new System.Drawing.Point(91, 104);
             this.txtValor.Name = "txtValor";
             this.txtValor.Size = new System.Drawing.Size(100, 20);
             this.txtValor.TabIndex = 3;
@@ -75,6 +78,7 @@
             // 
             // btnSaque
             // 
+            this.btnSaque.Enabled = false;
             this.btnSaque.Location = new System.Drawing.Point(116, 153);
             this.btnSaque.Name = "btnSaque";
             this.btnSaque.Size = new System.Drawing.Size(84, 23);
@@ -85,13 +89,14 @@
             // 
             // btnTransferir
             // 
+            this.btnTransferir.Enabled = false;
             this.btnTransferir.Location = new System.Drawing.Point(218, 153);
             this.btnTransferir.Name = "btnTransferir";
             this.btnTransferir.Size = new System.Drawing.Size(84, 23);
             this.btnTransferir.TabIndex = 5;
             this.btnTransferir.Text = "Transferência";
             this.btnTransferir.UseVisualStyleBackColor = true;
-            this.btnTransferir.Click += new System.EventHandler(this.btnTransferir_Click);
+            this.btnTransferir.Click += new System.EventHandler(this.BtnTransferir_Click);
             // 
             // grpBoxFunc
             // 
@@ -115,16 +120,17 @@
             // cboBoxFavorecido
             // 
             this.cboBoxFavorecido.FormattingEnabled = true;
-            this.cboBoxFavorecido.Location = new System.Drawing.Point(91, 104);
+            this.cboBoxFavorecido.Location = new System.Drawing.Point(91, 65);
             this.cboBoxFavorecido.Name = "cboBoxFavorecido";
             this.cboBoxFavorecido.Size = new System.Drawing.Size(214, 21);
             this.cboBoxFavorecido.TabIndex = 9;
+            this.cboBoxFavorecido.SelectedIndexChanged += new System.EventHandler(this.cboBoxFavorecido_SelectedIndexChanged);
             // 
             // lblFavorecido
             // 
             this.lblFavorecido.AutoSize = true;
             this.lblFavorecido.ForeColor = System.Drawing.Color.Navy;
-            this.lblFavorecido.Location = new System.Drawing.Point(14, 108);
+            this.lblFavorecido.Location = new System.Drawing.Point(23, 69);
             this.lblFavorecido.Name = "lblFavorecido";
             this.lblFavorecido.Size = new System.Drawing.Size(63, 13);
             this.lblFavorecido.TabIndex = 8;
@@ -133,16 +139,17 @@
             // cboBoxTitular
             // 
             this.cboBoxTitular.FormattingEnabled = true;
-            this.cboBoxTitular.Location = new System.Drawing.Point(91, 64);
+            this.cboBoxTitular.Location = new System.Drawing.Point(91, 26);
             this.cboBoxTitular.Name = "cboBoxTitular";
             this.cboBoxTitular.Size = new System.Drawing.Size(214, 21);
             this.cboBoxTitular.TabIndex = 7;
+            this.cboBoxTitular.SelectedIndexChanged += new System.EventHandler(this.CboBoxTitular_SelectedIndexChanged);
             // 
             // lblTitular
             // 
             this.lblTitular.AutoSize = true;
             this.lblTitular.ForeColor = System.Drawing.Color.Navy;
-            this.lblTitular.Location = new System.Drawing.Point(14, 68);
+            this.lblTitular.Location = new System.Drawing.Point(47, 30);
             this.lblTitular.Name = "lblTitular";
             this.lblTitular.Size = new System.Drawing.Size(39, 13);
             this.lblTitular.TabIndex = 6;
@@ -150,6 +157,8 @@
             // 
             // grpBoxInfo
             // 
+            this.grpBoxInfo.Controls.Add(this.lblInfoTitular);
+            this.grpBoxInfo.Controls.Add(this.txtBoxInfoTitular);
             this.grpBoxInfo.Controls.Add(this.lblSaldo);
             this.grpBoxInfo.Controls.Add(this.txtBoxSaldo);
             this.grpBoxInfo.ForeColor = System.Drawing.Color.Navy;
@@ -160,11 +169,31 @@
             this.grpBoxInfo.TabStop = false;
             this.grpBoxInfo.Text = "Informação";
             // 
+            // lblInfoTitular
+            // 
+            this.lblInfoTitular.AutoSize = true;
+            this.lblInfoTitular.ForeColor = System.Drawing.Color.Navy;
+            this.lblInfoTitular.Location = new System.Drawing.Point(59, 26);
+            this.lblInfoTitular.Name = "lblInfoTitular";
+            this.lblInfoTitular.Size = new System.Drawing.Size(39, 13);
+            this.lblInfoTitular.TabIndex = 3;
+            this.lblInfoTitular.Text = "Titular:";
+            // 
+            // txtBoxInfoTitular
+            // 
+            this.txtBoxInfoTitular.BackColor = System.Drawing.SystemColors.Menu;
+            this.txtBoxInfoTitular.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtBoxInfoTitular.Location = new System.Drawing.Point(104, 26);
+            this.txtBoxInfoTitular.Name = "txtBoxInfoTitular";
+            this.txtBoxInfoTitular.Size = new System.Drawing.Size(100, 13);
+            this.txtBoxInfoTitular.TabIndex = 2;
+            this.txtBoxInfoTitular.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
             // lblSaldo
             // 
             this.lblSaldo.AutoSize = true;
             this.lblSaldo.ForeColor = System.Drawing.Color.Navy;
-            this.lblSaldo.Location = new System.Drawing.Point(4, 28);
+            this.lblSaldo.Location = new System.Drawing.Point(11, 163);
             this.lblSaldo.Name = "lblSaldo";
             this.lblSaldo.Size = new System.Drawing.Size(87, 13);
             this.lblSaldo.TabIndex = 1;
@@ -174,7 +203,7 @@
             // 
             this.txtBoxSaldo.BackColor = System.Drawing.SystemColors.Menu;
             this.txtBoxSaldo.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtBoxSaldo.Location = new System.Drawing.Point(101, 29);
+            this.txtBoxSaldo.Location = new System.Drawing.Point(101, 163);
             this.txtBoxSaldo.Name = "txtBoxSaldo";
             this.txtBoxSaldo.Size = new System.Drawing.Size(100, 13);
             this.txtBoxSaldo.TabIndex = 0;
@@ -212,6 +241,8 @@
         private System.Windows.Forms.TextBox txtBoxSaldo;
         private System.Windows.Forms.ComboBox cboBoxFavorecido;
         private System.Windows.Forms.Label lblFavorecido;
+        private System.Windows.Forms.Label lblInfoTitular;
+        private System.Windows.Forms.TextBox txtBoxInfoTitular;
     }
 }
 
