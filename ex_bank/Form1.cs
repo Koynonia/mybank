@@ -6,62 +6,55 @@ namespace ex_bank
 {
     public partial class FrmConta : Form
     {
+        //private Cliente cliente;
+        private Conta[] contas;
+        private TotalizadorDeContas contaTotal;
+
         public FrmConta()
         {
             this.StartPosition = FormStartPosition.CenterScreen;
-            this.Text = "ExBank";
+            this.Text = "MyBank";
             InitializeComponent();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            txtBoxSaldo.Text = "0,00";
-            cboBoxTitular.DataSource = PreencheCboBoxTitularFavorecido();
-            cboBoxFavorecido.DataSource = PreencheCboBoxTitularFavorecido();
+            txtSaldo.Text = "0,00";
+            cboTitular.DataSource = Preenche_Combos();
+            cboFavorecido.DataSource = Preenche_Combos();
+
+            // criando o array para guardar as contas
+            contas = new Conta[3];
+
+            // Inicializando algumas instâncias de Conta.
+            this.contas[0] = new Conta();
+            this.contas[0].Titular = new Cliente("Fernando", "M. Oliveira", 48, "emancipacao", "11122233344");
+            this.contas[0].Numero = 1;
+
+            this.contas[1] = new Poupanca();
+            this.contas[1].Titular = new Cliente("Fulano", "da Silva", 32, "emancipacao", "22211133344");
+            this.contas[1].Numero = 2;
+
+            this.contas[2] = new Corrente();
+            this.contas[2].Titular = new Cliente("Sicrano", "Dias", 16, "", "11133322244");
+            this.contas[2].Numero = 3;
         }
 
-        Conta titular = new Conta { };
-        Conta favorecido = new Conta { };
-
-        Conta fernando = new Conta
+        public ArrayList Preenche_Combos()
         {
-            Nome = "Fernando",
-            Sobrenome = "M. Oliveira",
-            Numero = 1,
-            Saldo = 0.00
-        };
-
-        Conta fulano = new Conta
-        {
-            Nome = "Fulano",
-            Sobrenome = "da Silva",
-            Numero = 2,
-            Saldo = 0.00
-        };
-
-        Conta sicrano = new Conta
-        {
-            Nome = "Sicrano",
-            Sobrenome = "Dias",
-            Numero = 3,
-            Saldo = 0.00
-        };
-
-        public ArrayList PreencheCboBoxTitularFavorecido()
-        {
-            ArrayList contas = new ArrayList
+            ArrayList listaNomes = new ArrayList
             {
                 "Selecione...",
-                (fernando.Nome + " " + fernando.Sobrenome),
-                (fulano.Nome + " " + fulano.Sobrenome),
-                (sicrano.Nome + " " + sicrano.Sobrenome)
+                "Fernando M. Oliveira",
+                "Fulano da Silva",
+                "Sicrano Dias"
             };
-            return contas;
+            return listaNomes;
         }
 
         public Boolean Verifica_Selecao_Titular()
         {
-            if (cboBoxTitular.SelectedItem.Equals("Selecione..."))
+            if (cboTitular.SelectedItem.Equals("Selecione..."))
             {
                 MessageBox.Show("Selecione o TITULAR.");
                 return false;
@@ -71,14 +64,17 @@ namespace ex_bank
 
         public void Habilita_Botoes()
         {
-            if (cboBoxTitular.SelectedIndex != 0)
+            int indice = cboTitular.SelectedIndex - 1;
+
+            if (cboTitular.SelectedIndex != 0)
             {
-                Definir_Titular();
-                Atualizar_Info(titular);
-                if (cboBoxFavorecido.SelectedIndex != 0)
+                Atualizar_Info(this.contas[indice]);
+
+                if (cboFavorecido.SelectedIndex != 0)
                 {
-                    Definir_Favorecido();
-                    if (cboBoxTitular.SelectedIndex.Equals(cboBoxFavorecido.SelectedIndex))
+                    Atualizar_Info(this.contas[indice]);
+
+                    if (cboTitular.SelectedIndex.Equals(cboFavorecido.SelectedIndex))
                     {
                         btnDeposito.Enabled = true;
                         btnSaque.Enabled = true;
@@ -100,7 +96,7 @@ namespace ex_bank
             }
         }
 
-        public Boolean Valor_vazio()
+        public Boolean Valor_Vazio()
         {
             if (String.IsNullOrEmpty(txtValor.Text))
             {
@@ -116,76 +112,45 @@ namespace ex_bank
             return valor;
         }
 
-        public Conta Definir_Titular()
-        {
-            switch (cboBoxTitular.SelectedIndex)
-            {
-                case 1:
-                    titular = fernando;
-                    break;
-                case 2:
-                    titular = fulano;
-                    break;
-                case 3:
-                    titular = sicrano;
-                    break;
-                default:
-                    MessageBox.Show("Ocorreu um erro ao selecionar o Titular!");
-                    break;
-            }
-
-            return titular;
-        }
-
-        public Conta Definir_Favorecido()
-        {
-            switch (cboBoxFavorecido.SelectedIndex)
-            {
-                case 1:
-                    favorecido = fernando;
-                    break;
-                case 2:
-                    favorecido = fulano;
-                    break;
-                case 3:
-                    favorecido = sicrano;
-                    break;
-                default:
-                    MessageBox.Show("Ocorreu um erro ao selecionar o Favorecido!");
-                    break;
-            }
-
-            return favorecido;
-        }
-
         public void Atualizar_Info(Conta titular)
         {
             txtValor.Text = null;
-            txtBoxInfoTitular.Text = titular.Nome;
-            txtBoxSaldo.Text = String.Format("{0:0.00}", titular.Saldo);
+            txtInfoTitular.Text = contas[0].Titular.Nome;
+            txtConta.Text = Convert.ToString(titular.Numero);
+            txtSaldo.Text = String.Format("{0:0.00}", titular.Saldo);
+        }
+        public bool Validar_Conta
+        {
+            get
+            {
+                var maiorDeIdade = this.contas[0].Titular.Idade >= 18;
+                var emancipado = this.contas[0].Titular.Documento.Contains("emancipacao");
+                var possuiCPF = !string.IsNullOrEmpty(this.contas[0].Titular.Cpf);
+                return (maiorDeIdade || emancipado) && possuiCPF;
+            }
         }
 
         private void BtnDeposito_Click(object sender, EventArgs e)
         {
-            if (Valor_vazio() && Verifica_Selecao_Titular())
+            if (Valor_Vazio() && Verifica_Selecao_Titular())
             {
-                titular.Deposito(Recupera_Valor(), favorecido);
-                Atualizar_Info(titular);
+                this.contas[0].Deposito(Recupera_Valor(), contas[0]);
+                Atualizar_Info(contas[0]);
             }
         }
 
         private void BtnSaque_Click(object sender, EventArgs e)
         {
-            if (Valor_vazio() && Verifica_Selecao_Titular())
+            if (Valor_Vazio() && Verifica_Selecao_Titular())
             {
-                if (titular.Saque(Recupera_Valor(), favorecido))
+                if (this.contas[0].Saque(Recupera_Valor(), contas[0]))
                 {
-                    Atualizar_Info(titular);
+                    Atualizar_Info(contas[0]);
                 }
                 else
                 {
-                    MessageBox.Show("Não existe saldo suficiente (" 
-                        + String.Format("{0:0.00}", titular.Saldo) 
+                    MessageBox.Show("Não existe saldo suficiente ("
+                        + String.Format("{0:0.00}", contas[0].Saldo)
                         + ") para realizar a transferência!");
                     txtValor.Text = null;
                 }
@@ -194,32 +159,32 @@ namespace ex_bank
 
         private void BtnTransferir_Click(object sender, EventArgs e)
         {
-            if (Valor_vazio() && Verifica_Selecao_Titular())
+            if (Valor_Vazio() && Verifica_Selecao_Titular())
             {
-                if (titular.Transfere(Recupera_Valor(), titular, favorecido))
+                if (this.contas[0].Transfere(Recupera_Valor(), contas[0], contas[0]))
                 {
-                    Atualizar_Info(titular);
+                    Atualizar_Info(contas[0]);
                 }
                 else
                 {
-                    MessageBox.Show("Não existe saldo suficiente (" 
-                        + String.Format("{0:0.00}", titular.Saldo) 
+                    MessageBox.Show("Não existe saldo suficiente ("
+                        + String.Format("{0:0.00}", contas[0].Saldo)
                         + ") para realizar a transferência!");
                     txtValor.Text = null;
                 }
             }
         }
 
-        private void CboBoxTitular_SelectedIndexChanged(object sender, EventArgs e)
+        private void CboTitular_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cboBoxFavorecido.SelectedIndex != -1)
+            if (cboFavorecido.SelectedIndex != -1)
             {
                 Habilita_Botoes();
-                cboBoxFavorecido.SelectedIndex = 0;
+                cboFavorecido.SelectedIndex = 0;
             }
         }
 
-        private void cboBoxFavorecido_SelectedIndexChanged(object sender, EventArgs e)
+        private void CboFavorecido_SelectedIndexChanged(object sender, EventArgs e)
         {
             Habilita_Botoes();
         }

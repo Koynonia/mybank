@@ -1,48 +1,37 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-
-namespace ex_bank
+﻿namespace ex_bank
 {
     public class Conta
     {
         private int numero;
-        private string nome;
-        private string sobrenome;
         private double saldo;
+        private Cliente titular;
 
-        public int Numero { get => numero; set => numero = value; }
-        public double Saldo { get => saldo; set => saldo = value; }
-        public string Nome { get => nome; set => nome = value; }
-        public string Sobrenome { get => sobrenome; set => sobrenome = value; }
+        public int Numero { get; set; }
+        public double Saldo { get; private set; }
+        public Cliente Titular { get; set; }
 
-        public void Deposito(double valor, Conta titular)
+        public void Deposito(double valor, Conta conta)
         {
-            titular.Saldo +=valor;
+            conta.Saldo += valor;
         }
 
-        public bool Saque(double valor, Conta titular)
+        public virtual bool Saque(double valor, Conta conta)
         {
-            if(titular.Saldo >= valor)
+            if (conta.Saldo >= valor)
             {
-                titular.Saldo -= valor;
+                conta.Saldo -= valor;
                 return true;
             }
             return false;
         }
 
-        public bool Transfere(double valor, Conta titular, Conta favorecido)
+        public bool Transfere(double valor, Conta conta, Conta favorecido)
         {
-            if(titular.Saque(valor, titular))
+            if (conta.Saque(valor, conta))
             {
-                titular.Deposito(valor, favorecido);
+                conta.Deposito(valor, favorecido);
                 return true;
             }
-
             return false;
         }
     }
