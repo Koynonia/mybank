@@ -1,0 +1,17 @@
+﻿<Properties StartupConfiguration="{0768BEA0-2134-4AF5-ACD2-2258F06FDF56}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ex_bank/Form1.cs">
+    <Files>
+      <File FileName="ex_bank/Form1.cs" Line="9" Column="35" />
+      <File FileName="ex_bank/Cliente.cs" Line="1" Column="1" />
+      <File FileName="ex_bank/Corrente.cs" Line="1" Column="1" />
+      <File FileName="ex_bank/Poupanca.cs" Line="21" Column="2" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.ex__bank PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

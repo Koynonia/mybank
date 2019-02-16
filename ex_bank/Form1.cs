@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Windows.Forms;
 
-namespace ex_bank
+namespace mybank
 {
     public partial class FrmConta : Form
     {

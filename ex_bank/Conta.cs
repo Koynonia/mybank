@@ -1,4 +1,4 @@
-﻿namespace ex_bank
+﻿namespace mybank
 {
     public class Conta
     {

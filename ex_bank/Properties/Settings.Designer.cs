@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ex_bank.Properties
+namespace mybank.Properties
 {
 
 

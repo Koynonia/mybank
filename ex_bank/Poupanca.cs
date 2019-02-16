@@ -1,4 +1,4 @@
-﻿namespace ex_bank
+﻿namespace mybank
 {
     internal class Poupanca : Conta
     {

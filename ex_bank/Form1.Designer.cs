@@ -1,4 +1,4 @@
-﻿namespace ex_bank
+﻿namespace mybank
 {
     partial class FrmConta
     {
